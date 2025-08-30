@@ -12,8 +12,9 @@ class Gallery extends Page
 
     public function getViewData(): array
     {
+        $image = Image::all();
         return [
-            'images' => Image::all(),
+            'images' => $image
         ];
     }
 

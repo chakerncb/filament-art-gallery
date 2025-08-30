@@ -18,13 +18,18 @@ class ImageForm
             ->components([
                 TextInput::make('title')
                     ->required(),
+                    
                 Textarea::make('description')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->required(),
+
                 FileUpload::make('file_path')
                     ->image()
                     ->required()
+                    ->maxSize(6144) // 6MB
                     ->directory('images')
                     ->disk('public'),
+
                 Hidden::make('user_id')
                     ->default(Auth::user()->id),
             ]);
