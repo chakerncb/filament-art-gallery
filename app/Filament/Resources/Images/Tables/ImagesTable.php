@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Images\Tables;
 
+use App\Models\Image;
+use App\Traits\HasFavorites;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -10,6 +12,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Grid;
 use Filament\Tables\Columns\Layout\Split;
@@ -17,13 +20,17 @@ use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\HtmlString;
 
 class ImagesTable
 {
+    use HasFavorites;
+
     public static function configure(Table $table): Table
     {
         return $table
+            ->query(fn () => Image::where('user_id', Auth::user()->id))
             ->columns([
                 Grid::make()
                     ->columns (1)
@@ -96,6 +103,13 @@ class ImagesTable
             ])
             ->recordUrl('')
             ->recordActions([
+                Action::make('Favorite')
+                ->icon(fn ($record) => self::isFavoritedStatic($record->id) ? 'heroicon-s-heart' : 'heroicon-o-heart')
+                ->name('.')
+                ->color('danger')
+                ->action(function ($record) {
+                    self::toggleFavoriteStatic($record->id);
+                }),
                 Action::make('download')
                     ->icon('heroicon-o-arrow-down-tray')
                     // ->name('Download')
