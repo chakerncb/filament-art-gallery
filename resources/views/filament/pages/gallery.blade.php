@@ -1,10 +1,4 @@
-{{-- <style>
-    .fi-topbar-ctn { display: none !important; }
-    .fi-main-ctn { padding-top: 0 !important; }
-</style> --}}
 <x-filament::page>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
     <div x-data="{ 
         showModal: false, 
         showDetails: false,
@@ -46,6 +40,7 @@
             }
         }
     }">
+    
         <!-- Header Section -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12">
             <div class="text-center lg:text-left">
@@ -96,44 +91,40 @@
                         <img src="{{ $artwork['image_url_small'] ?? $artwork['image_url'] }}" 
                          alt="{{ $artwork['title'] ?? 'Artwork' }}" 
                          class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
-                    @endif
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
-                        <div class="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-4">
-                        <div class="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-200"
-                             @click="openModal({
-                            id: {{ $artwork['id'] ?? 0 }},
-                            title: {{ json_encode($artwork['title'] ?? 'Untitled') }},
-                            description: {{ json_encode($artwork['artist_display'] ?? '') }},
-                            file_path: {{ json_encode($artwork['image_url'] ?? '') }},
-                            type: 'api',
-                            user_name: {{ json_encode($artwork['artist_display'] ?? 'Unknown') }},
-                            created_at: {{ json_encode($artwork['date_display'] ?? 'Unknown') }},
-                            file_size: 'Unknown',
-                            file_type: 'Unknown'
-                            })">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                        </div>
                         
-                        {{-- <div class="relative group/download">
-                            <button @click="downloadImage()" 
-                                class="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-200">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7L12 14M12 14L15 11M12 14L9 11"/>
-                                <path stroke-linecap="round" stroke-width="2" d="M16 17H12H8"/>
-                            </svg>
-                            </button>
-                            
-                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs rounded-lg py-1 px-2 opacity-0 group-hover/download:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                            Download
-                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black rotate-45"></div>
+                        <!-- Gradient overlay that appears on hover -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Action buttons overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="text-white transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-4">
+                                <div class="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-200"
+                                     @click="openModal({
+                                    id: {{ $artwork['id'] ?? 0 }},
+                                    title: {{ json_encode($artwork['title'] ?? 'Untitled') }},
+                                    description: {{ json_encode($artwork['artist_display'] ?? '') }},
+                                    file_path: {{ json_encode($artwork['image_url'] ?? '') }},
+                                    type: 'api',
+                                    user_name: {{ json_encode($artwork['artist_display'] ?? 'Unknown') }},
+                                    created_at: {{ json_encode($artwork['date_display'] ?? 'Unknown') }},
+                                    file_size: 'Unknown',
+                                    file_type: 'Unknown'
+                                    })">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </div>
                             </div>
-                        </div> --}}
                         </div>
-                    </div>
+                    @else
+                        <!-- Placeholder for missing images -->
+                        <div class="w-full h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    @endif
                     </div>
                     
                     <div class="p-4">
@@ -228,9 +219,13 @@
                     <img src="{{ Storage::url($image->file_path) }}" 
                          alt="{{ $image->title }}" 
                          class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                    
+                    <!-- Gradient overlay that appears on hover -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
-                        <div class="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-4">
+                    
+                    <!-- Action buttons overlay -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="text-white transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-4">
                         <div class="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-200"
                              @click="openModal({
                             id: {{ $image->id }},
@@ -248,21 +243,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                             </svg>
                         </div>
-                        
-                        {{-- <div class="relative group/download">
-                            <button @click="downloadImage()" 
-                                class="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-200">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7L12 14M12 14L15 11M12 14L9 11"/>
-                                <path stroke-linecap="round" stroke-width="2" d="M16 17H12H8"/>
-                            </svg>
-                            </button>
-                            
-                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs rounded-lg py-1 px-2 opacity-0 group-hover/download:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                            Download
-                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black rotate-45"></div>
-                            </div>
-                        </div> --}}
                         </div>
                     </div>
                     </div>

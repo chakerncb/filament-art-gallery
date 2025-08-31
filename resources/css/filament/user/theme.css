@@ -1,0 +1,118 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import "tailwindcss";
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/* Enhanced topbar styling */
+.fi-topbar {
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgb(229, 231, 235);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.dark .fi-topbar {
+    background-color: rgba(17, 24, 39, 0.95);
+    border-bottom-color: rgb(75, 85, 99);
+}
+
+/* Enhanced navigation links */
+.fi-topbar nav a {
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-topbar nav a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.fi-topbar nav a:hover::before {
+    width: 100%;
+}
+
+/* Button hover effects */
+.fi-topbar button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-topbar button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Enhanced logo area */
+.fi-topbar-start {
+    transition: all 0.3s ease;
+}
+
+/* Search enhancement */
+.fi-global-search-input {
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .fi-global-search-input {
+    background-color: rgba(31, 41, 55, 0.8);
+}
+
+/* User menu styling */
+.fi-user-menu-trigger {
+    transition: all 0.2s ease;
+}
+
+.fi-user-menu-trigger:hover {
+    transform: scale(1.05);
+}
+
+/* Ensure images display correctly */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Fix any potential z-index issues */
+.relative img {
+    position: relative;
+    z-index: 1;
+}
+
+.absolute {
+    z-index: 10;
+}
+
+/* Ensure proper image loading */
+img[src=""], img:not([src]) {
+    display: none;
+}
+
+/* Gallery image enhancements */
+.gallery-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Smooth page transitions */
+.fi-main {
+    transition: all 0.3s ease;
+}
+
+/* Enhanced focus states */
+*:focus {
+    outline: 2px solid rgb(245, 158, 11);
+    outline-offset: 2px;
+}
+

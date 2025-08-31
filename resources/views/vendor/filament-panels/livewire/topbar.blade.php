@@ -1,4 +1,5 @@
-<div class="fi-topbar-ctn">
+<div>
+    <div class="fi-topbar-ctn">
     @php
         $navigation = filament()->getNavigation();
         $isRtl = __('filament-panels::layout.direction') === 'rtl';
@@ -252,4 +253,6 @@
     </nav>
 
     <x-filament-actions::modals />
+    </div>
 </div>
+

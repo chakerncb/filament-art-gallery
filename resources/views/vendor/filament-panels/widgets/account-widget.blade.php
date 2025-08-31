@@ -21,7 +21,7 @@
         </div>
 
         <form
-            action="{{ filament()->getLogoutUrl() }}"
+            action="{{ route('logout')}}"
             method="post"
             class="fi-account-widget-logout-form"
         >

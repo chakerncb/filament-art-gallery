@@ -1,6 +1,4 @@
-<x-filament::page>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+<x-filament::page>    
     <div class="space-y-8">
         <div class="text-center">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
