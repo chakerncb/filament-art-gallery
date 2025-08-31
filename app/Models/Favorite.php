@@ -8,6 +8,7 @@ class Favorite extends Model
 {
     protected $fillable = [
         'user_id',
+        'img_id',
         'image_url',
         'title',
         'api_image'
