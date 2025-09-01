@@ -34,7 +34,12 @@ class UserPanelProvider extends PanelProvider
             ->path('user')
             // ->login()  // removed for use breeze auth
             ->colors([
-                'primary' => Color::Amber,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
              ->renderHook(
                 PanelsRenderHook::GLOBAL_SEARCH_BEFORE,

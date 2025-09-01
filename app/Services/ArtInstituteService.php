@@ -70,12 +70,12 @@ class ArtInstituteService
     /**
      * Search artworks by query
      */
-    public function searchArtworks(string $query, int $limit = 12, array $fields = null): array
+    public function searchArtworks(string $query, int $limit = 12, int $page = 1, array $fields = null): array
     {
         try {
-            $cacheKey = "aic_search_" . md5($query . $limit);
+            $cacheKey = "aic_search_" . md5($query . $limit . $page);
             
-            return Cache::remember($cacheKey, 1800, function () use ($query, $limit, $fields) {
+            return Cache::remember($cacheKey, 1800, function () use ($query, $limit, $page, $fields) {
                 $defaultFields = [
                     'id', 'title', 'artist_display', 'date_display', 'place_of_origin',
                     'description', 'short_description', 'medium_display', 'dimensions',
@@ -93,6 +93,7 @@ class ArtInstituteService
                     ->get($this->baseUrl . '/artworks/search', [
                         'q' => $query,
                         'size' => $limit,
+                        'from' => ($page - 1) * $limit,
                         'fields' => implode(',', $queryFields),
                     ]);
 
@@ -165,11 +166,20 @@ class ArtInstituteService
     }
 
     /**
-     * Build IIIF image URL
+     * Build IIIF image URL from artwork ID
      */
-    public function buildImageUrl(string $imageId, int $width = 843, string $format = 'jpg'): string
+    public function buildImageUrl($artworkId, int $width = 843, string $format = 'jpg'): ?string
     {
-        return "{$this->iiifBaseUrl}/{$imageId}/full/{$width},/0/default.{$format}";
+        if (is_string($artworkId) && preg_match('/^[a-f0-9-]+$/', $artworkId)) {
+            return "{$this->iiifBaseUrl}/{$artworkId}/full/{$width},/0/default.{$format}";
+        }
+        
+        $artwork = $this->getArtwork((int)$artworkId);
+        if (!$artwork || !isset($artwork['image_id']) || !$artwork['image_id']) {
+            return null;
+        }
+        
+        return "{$this->iiifBaseUrl}/{$artwork['image_id']}/full/{$width},/0/default.{$format}";
     }
 
     /**
