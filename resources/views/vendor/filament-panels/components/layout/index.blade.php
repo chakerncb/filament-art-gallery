@@ -27,16 +27,15 @@
 >
     @if ($hasTopbar)
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_BEFORE, scopes: $renderHookScopes) }}
-          @if (filament()->auth()->check())
+          {{-- @if (filament()->auth()->check())
                      @livewire(filament()->getTopbarLivewireComponent())
-          @else
+          @else --}}
                      <x-custom-topbar />
 
-          @endif
+          {{-- @endif --}}
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_AFTER, scopes: $renderHookScopes) }}
     @endif
 
-    {{-- The sidebar is after the page content in the markup to fix issues with page content overlapping dropdown content from the sidebar. --}}
     <div class="fi-layout">
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::LAYOUT_START, scopes: $renderHookScopes) }}
 

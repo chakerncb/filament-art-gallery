@@ -71,7 +71,7 @@ trait HasFavorites
             $artService = app(ArtInstituteService::class);
             $artwork = $artService->getArtwork($imageId);
 
-            $imageUrl = $artwork['image_url'];
+            $imageUrl = $artwork['image_url'] ?? '';
             $title = $artwork['title'];
             
             $existingFavorite = Favorite::where('user_id', $userId)
@@ -90,7 +90,7 @@ trait HasFavorites
                 Favorite::create([
                     'user_id' => $userId,
                     'img_id' => $imageId,
-                    'image_url' => $imageUrl,
+                    'image_url' => $imageUrl ?? null,
                     'title' => $title,
                     'api_image' => true
                 ]);
@@ -129,7 +129,7 @@ trait HasFavorites
                 Favorite::create([
                     'user_id' => $userId,
                     'img_id' => $imageId,
-                    'image_url' => $imageUrl,
+                    'image_url' => $imageUrl ?? null,
                     'title' => $image->title,
                     'api_image' => false
                 ]);

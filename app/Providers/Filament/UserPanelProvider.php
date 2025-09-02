@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Gallery;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -33,6 +34,7 @@ class UserPanelProvider extends PanelProvider
             ->id('user')
             ->path('user')
             // ->login()  // removed for use breeze auth
+            ->homeUrl('/')
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
@@ -84,6 +86,7 @@ class UserPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
+                Gallery::class
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
