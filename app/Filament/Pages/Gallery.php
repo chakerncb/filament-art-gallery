@@ -60,7 +60,7 @@ class Gallery extends Page
         $artService = app(ArtInstituteService::class);
          $apiResult = [];
         if($this->query == '' ){
-          $apiResult = $artService->getArtworks($this->perPage, $this->artworksPage);
+          $apiResult = $artService->getFeaturedArtworks($this->perPage, $this->artworksPage);
         }else{
           $apiResult = $artService->searchArtworks($this->query , $this->perPage,$this->artworksPage);
         }
@@ -105,7 +105,11 @@ class Gallery extends Page
     public function downloadImage($imageId, $apiImg = false) {
         if($apiImg){
             $artService = app(ArtInstituteService::class);
-            $imageUrl = $artService->buildImageUrl($imageId);
+            $artwork = $artService->getArtwork($imageId);
+
+            $imageUrl = $artwork['image_url'];
+            $title = $artwork['title'];
+
             if(!$imageUrl){
                  Notification::make()
                     ->title('Error While Downloading the image!')
@@ -119,9 +123,10 @@ class Gallery extends Page
                     ->success()
                     ->send();
 
+           
             return response()->streamDownload(function () use ($imageUrl) {
                 echo Http::get($imageUrl)->body();
-            }, "{$imageId}.jpg");
+            }, "{$title}.jpg");
         }
         else{
            $image = Image::find($imageId);
@@ -147,6 +152,7 @@ class Gallery extends Page
     public function openImageModal($imageId, $isApi = false)
     {
         $this->isApiImage = $isApi;
+        $this->showModal = true;
         
         if ($isApi) {
             $artService = app(ArtInstituteService::class);
@@ -211,7 +217,6 @@ class Gallery extends Page
             $this->getRelatedLocalImages($image->user_id, $imageId);
         }
         
-        $this->showModal = true;
     }
 
     private function getRelatedApiImages($artistTitle)

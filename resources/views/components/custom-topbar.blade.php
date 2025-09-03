@@ -1,39 +1,73 @@
 <div class="fi-topbar-ctn border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm">
     <nav class="fi-topbar flex items-center justify-between px-4 py-3">
-        <div class="fi-topbar-start flex items-center space-x-3">
+        <a href="/" class="fi-topbar-start flex items-center space-x-3 gap-3">
             <x-filament-panels::logo />
+            <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white">ArtGallery</span>
+        </a>
+        <div class="fi-topbar-center hidden md:flex items-center space-x-1">
+            <x-filament::link
+                href="/"
+                color="gray"
+                size="md"
+                class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+                :class="request()->is('/') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
+            >
+                Home
+            </x-filament::link>
+
+            <x-filament::link
+                href="/#AIC"
+                color="gray"
+                size="md"
+                class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+                :class="request()->is('gallery*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
+            >
+                Art Institute
+            </x-filament::link>
+
+            <x-filament::link
+                href="/#cummunity"
+                color="gray"
+                size="md"
+                class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+                :class="request()->is('artists*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
+            >
+                Community
+            </x-filament::link>
+
+            <x-filament::link
+                href="#"
+                color="gray"
+                size="md"
+                class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+                :class="request()->is('about*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
+            >
+                About
+            </x-filament::link>
         </div>
 
-        <div class="flex-1 max-w-sm mx-4 mr-2">
-            <form method="get" role="search" aria-label="Find content sitewide" action="#" class="relative">
-                <div class="relative flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow duration-200 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500">
-                    <button title="Search" class="mr-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" type="submit">
-                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </button>
-                    
-                    <input 
-                        autocomplete="off" 
-                        placeholder="Search artworks..." 
-                        title="Search content" 
-                        class="flex-1 bg-transparent border-none outline-none text-gray-400 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-sm" 
-                        autocapitalize="none" 
-                        spellcheck="false" 
-                        type="search" 
-                        name="searchKeyword"
+        <div class="fi-topbar-end flex items-center space-x-3">
+            @auth
+                <div class="hidden lg:flex items-center gap-3">
+                    <x-filament::badge
+                        color="info"
+                        icon="heroicon-m-photo"
+                        size="lg"
+                        :label="'You have ' . Auth::user()->images()->count() . ' images in your gallery'"
                     >
+                        {{ Auth::user()->images()->count() }} Images
+                    </x-filament::badge>
                     
-                    <button type="button" aria-label="Visual search" class="ml-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </button>
+                    <x-filament::badge
+                        color="danger"
+                        icon="heroicon-m-heart"
+                        size="lg"
+                        :label="'You have ' . Auth::user()->favorites()->count() . ' favorite artworks'"
+                    >
+                        {{ Auth::user()->favorites()->count() }} Favorites
+                    </x-filament::badge>
                 </div>
-            </form>
-        </div>
-
-        <div class="fi-topbar-end flex items-center space-x-2">
+            @endauth
             <div class="flex items-center">
                 <x-filament::icon-button
                     color="gray"
@@ -147,7 +181,7 @@
                     </div>
                 </div>
             @else
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 gap-2">
                     <x-filament::button
                         color="gray"
                         outlined

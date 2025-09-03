@@ -4,7 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Gallery;
 use Filament\Facades\Filament;
-use Filament\Http\Middleware\Authenticate;
+// use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,6 +17,7 @@ use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -81,12 +82,15 @@ class UserPanelProvider extends PanelProvider
                 ')
             )
             ->viteTheme('resources/css/filament/user/theme.css')
+            ->brandLogo(asset('images/logo.png'))
             ->brandName('ArtGallery')
+            ->brandLogoHeight('3rem')
+            ->favicon(asset('images/logo.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
-                Dashboard::class,
-                Gallery::class
+                // Dashboard::class,
+                // Gallery::class
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
@@ -110,30 +114,30 @@ class UserPanelProvider extends PanelProvider
             ]);
     }
 
-    public function boot(): void
-{
-    Filament::serving(function () {
-        $panel = Filament::getCurrentPanel();
+//     public function boot(): void
+// {
+//     Filament::serving(function () {
+//         $panel = Filament::getCurrentPanel();
 
-        $panel->userMenuItems([
-            'dashboard' => MenuItem::make()
-                ->label('Dashboard')
-                ->url('/user')
-                ->icon('heroicon-o-home'),
-            'my-images' => MenuItem::make()
-                ->label('My Images')
-                ->url('/user/images')
-                ->icon('heroicon-o-photo'),
-            'favorites' => MenuItem::make()
-                ->label('Favorites')
-                ->url('/user/favorites')
-                ->icon('heroicon-o-heart'),
-            'profile' => MenuItem::make()
-                ->label('Profile')
-                ->url('/profile')
-                ->icon('heroicon-o-user'),
+//         $panel->userMenuItems([
+//             'dashboard' => MenuItem::make()
+//                 ->label('Dashboard')
+//                 ->url('/user')
+//                 ->icon('heroicon-o-home'),
+//             'my-images' => MenuItem::make()
+//                 ->label('My Images')
+//                 ->url('/user/images')
+//                 ->icon('heroicon-o-photo'),
+//             'favorites' => MenuItem::make()
+//                 ->label('Favorites')
+//                 ->url('/user/favorites')
+//                 ->icon('heroicon-o-heart'),
+//             'profile' => MenuItem::make()
+//                 ->label('Profile')
+//                 ->url('/profile')
+//                 ->icon('heroicon-o-user'),
 
-        ] + $panel->getUserMenuItems());
-    });
-}
+//         ] + $panel->getUserMenuItems());
+//     });
+// }
 }

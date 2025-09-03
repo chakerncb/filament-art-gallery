@@ -47,7 +47,6 @@
             @endif
         </div>
 
-        <!-- Page indicator on the right -->
         <div class="text-sm text-gray-500 dark:text-gray-400">
             Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} results
         </div>

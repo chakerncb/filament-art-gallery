@@ -235,12 +235,12 @@ class ArtInstituteService
     /**
      * Get featured artworks (high-quality public domain works)
      */
-    public function getFeaturedArtworks(int $limit = 8): array
+    public function getFeaturedArtworks(int $limit = 8, int $page = 1): array
     {
         try {
-            $cacheKey = "aic_featured_{$limit}";
+            $cacheKey = "aic_featured_{$limit}_{$page}";
             
-            return Cache::remember($cacheKey, 7200, function () use ($limit) {
+            return Cache::remember($cacheKey, 7200, function () use ($limit, $page) {
                 $response = Http::timeout(30)
                     ->withHeaders([
                         'AIC-User-Agent' => 'Laravel Art Gallery'
@@ -255,7 +255,8 @@ class ArtInstituteService
                             ]
                         ]),
                         'size' => $limit,
-                        'fields' => 'id,title,artist_display,date_display,image_id,artist_title,artwork_type_title',
+                        'from' => ($page - 1) * $limit,
+                        'fields' => 'id,title,description,artist_display,date_display,image_id,artist_title,artwork_type_title',
                     ]);
 
                 if ($response->successful()) {

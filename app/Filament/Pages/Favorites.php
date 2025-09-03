@@ -9,6 +9,7 @@ use App\Traits\HasFavorites;
 use Filament\Pages\Page;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,6 +29,11 @@ class Favorites extends Page
     public array $relatedImages = [];
     public $selectedFavorite = null;
 
+    public string $query = '';
+    public int $perPage = 12;
+    
+    public array $perPageOptions = [12, 24, 48, 96];
+
     public function getHeading(): string
     {
         return ''; // Remove page head
@@ -39,10 +45,14 @@ class Favorites extends Page
             return ['favorites' => collect()];
         }
 
-        $favorites = Favorite::where('user_id', Auth::id())
+        $result = Favorite::where('user_id', Auth::id())
             ->with(['user'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(12);
+            ->orderBy('created_at', 'desc');
+
+        if($this->query || $this->query != ''){
+          $result->where('title' , 'like' , '%'.$this->query.'%');
+        }
+         $favorites = $result->paginate($this->perPage);
 
         foreach ($favorites as $favorite) {
             if (!$favorite->api_image) {
@@ -78,6 +88,8 @@ class Favorites extends Page
 
         $this->selectedFavorite = $favorite;
         $this->isApiImage = $favorite->api_image;
+        $this->showModal = true;
+
         
         if ($favorite->api_image) {
 
@@ -125,7 +137,6 @@ class Favorites extends Page
         }
         
         $this->relatedImages = [];
-        $this->showModal = true;
     }
 
     public function openImageModal($imageId, $isApi = false)
@@ -166,15 +177,25 @@ class Favorites extends Page
         }
 
         if ($favorite->api_image) {
-            if ($favorite->image_url) {
-                return redirect($favorite->image_url);
+            if (!$favorite->image_url) {
+                Notification::make()
+                    ->title('Error While downloading the image!!')
+                    ->danger()
+                    ->send();
+                return;
             }
             
-            Notification::make()
-                ->title('Download not available for this image!')
-                ->warning()
-                ->send();
-            return;
+           Notification::make()
+                    ->title('Image Downloaded Successfully!')
+                    ->success()
+                    ->send();
+
+            $imageUrl = $favorite->image_url;
+            $title = $favorite->title;
+            return response()->streamDownload(function () use ($imageUrl) {
+                echo Http::get($imageUrl)->body();
+            }, "{$title}.jpg");
+
         } else {
             $image = Image::find($favorite->img_id);
             if (!$image || !$image->file_path) {
@@ -233,4 +254,9 @@ class Favorites extends Page
             ->danger()
             ->send();
     }
+
+    public function search(){
+        $this->getViewData();
+    }
+    
 }

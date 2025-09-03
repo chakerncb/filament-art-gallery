@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users' , 'id')->onDelete('cascade');
-            $table->text('image_url');
+            $table->text('image_url')->nullable();
             $table->text('title');
             $table->boolean('api_image');
             $table->timestamps();
