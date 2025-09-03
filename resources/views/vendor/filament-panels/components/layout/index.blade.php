@@ -27,12 +27,11 @@
 >
     @if ($hasTopbar)
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_BEFORE, scopes: $renderHookScopes) }}
-          {{-- @if (filament()->auth()->check())
-                     @livewire(filament()->getTopbarLivewireComponent())
-          @else --}}
-                     <x-custom-topbar />
-
-          {{-- @endif --}}
+        @if (request()->routeIs('filament.user.*'))
+            @livewire(filament()->getTopbarLivewireComponent())
+         @else
+            <x-custom-topbar />
+        @endif
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_AFTER, scopes: $renderHookScopes) }}
     @endif
 

@@ -4,6 +4,7 @@
             <x-filament-panels::logo />
             <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white">ArtGallery</span>
         </a>
+
         <div class="fi-topbar-center hidden md:flex items-center space-x-1">
             <x-filament::link
                 href="/"
@@ -89,6 +90,11 @@
                         (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) ? 'heroicon-m-moon' : 'heroicon-m-sun'
                     "
                 />
+            </div>
+
+            <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>
+            <div class="flex items-center">
+                @livewire('language-switch')
             </div>
 
             <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>

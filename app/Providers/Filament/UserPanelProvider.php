@@ -114,30 +114,21 @@ class UserPanelProvider extends PanelProvider
             ]);
     }
 
-//     public function boot(): void
-// {
-//     Filament::serving(function () {
-//         $panel = Filament::getCurrentPanel();
+    public function boot(): void
+{
+    Filament::serving(function () {
+        $panel = Filament::getCurrentPanel();
 
-//         $panel->userMenuItems([
-//             'dashboard' => MenuItem::make()
-//                 ->label('Dashboard')
-//                 ->url('/user')
-//                 ->icon('heroicon-o-home'),
-//             'my-images' => MenuItem::make()
-//                 ->label('My Images')
-//                 ->url('/user/images')
-//                 ->icon('heroicon-o-photo'),
-//             'favorites' => MenuItem::make()
-//                 ->label('Favorites')
-//                 ->url('/user/favorites')
-//                 ->icon('heroicon-o-heart'),
-//             'profile' => MenuItem::make()
-//                 ->label('Profile')
-//                 ->url('/profile')
-//                 ->icon('heroicon-o-user'),
-
-//         ] + $panel->getUserMenuItems());
-//     });
-// }
+        $panel->userMenuItems([
+            'my-images' => MenuItem::make()
+                ->label('My Images')
+                ->url('/user/images')
+                ->icon('heroicon-o-photo'),
+            'favorites' => MenuItem::make()
+                ->label('Favorites')
+                ->url('/user/favorites')
+                ->icon('heroicon-o-heart')
+        ] + $panel->getUserMenuItems());
+    });
+}
 }

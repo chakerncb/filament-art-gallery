@@ -19,6 +19,8 @@ class Gallery extends Page
     use HasFavorites, WithPagination;
     
     protected static bool $shouldRegisterNavigation = false;
+
+    protected static bool $shouldRegisterInNavigation = false;
     protected string $view = 'filament.pages.gallery';
     
     public int $artworksPage = 1;
