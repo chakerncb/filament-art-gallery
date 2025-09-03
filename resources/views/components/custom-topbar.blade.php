@@ -13,7 +13,7 @@
                 class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                 :class="request()->is('/') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
             >
-                Home
+                {{__('layouts.custom-topbar.home')}}
             </x-filament::link>
 
             <x-filament::link
@@ -23,7 +23,7 @@
                 class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                 :class="request()->is('gallery*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
             >
-                Art Institute
+                {{__('layouts.custom-topbar.aic')}}
             </x-filament::link>
 
             <x-filament::link
@@ -33,7 +33,7 @@
                 class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                 :class="request()->is('artists*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
             >
-                Community
+                {{__('layouts.custom-topbar.community')}}
             </x-filament::link>
 
             <x-filament::link
@@ -43,7 +43,7 @@
                 class="fi-nav-link font-bold px-4 py-2 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                 :class="request()->is('about*') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 border-primary-200 dark:border-primary-800' : ''"
             >
-                About
+                {{__('layouts.custom-topbar.about')}}
             </x-filament::link>
         </div>
 
@@ -56,7 +56,7 @@
                         size="lg"
                         :label="'You have ' . Auth::user()->images()->count() . ' images in your gallery'"
                     >
-                        {{ Auth::user()->images()->count() }} Images
+                        {{ Auth::user()->images()->count() }} {{__('layouts.custom-topbar.badges.images')}}
                     </x-filament::badge>
                     
                     <x-filament::badge
@@ -65,7 +65,7 @@
                         size="lg"
                         :label="'You have ' . Auth::user()->favorites()->count() . ' favorite artworks'"
                     >
-                        {{ Auth::user()->favorites()->count() }} Favorites
+                        {{ Auth::user()->favorites()->count() }} {{__('layouts.custom-topbar.badges.favorites')}}
                     </x-filament::badge>
                 </div>
             @endauth
@@ -107,7 +107,7 @@
                         type="button"
                         :class="{ 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700': open }"
                     >
-                        <div class="w-9 h-9 bg-gray-600 dark:bg-gray-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm">
+                        <div class="w-9 h-9 bg-gray-600 dark:bg-black rounded-full flex items-center justify-center text-black dark:text-black text-sm font-bold shadow-sm">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                         <span class="hidden sm:block text-sm font-medium text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
@@ -131,9 +131,6 @@
                     >
                         <div class="px-6 py-5 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 bg-gray-600 dark:bg-gray-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </div>
                                 <div class="flex-1 min-w-0">
                                     <h3 class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ Auth::user()->name }}</h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 truncate mt-0.5">{{ Auth::user()->email }}</p>
@@ -148,7 +145,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <span>My Images</span>
+                                <span>{{__('layouts.custom-topbar.user-dropdown.my-imgs')}}</span>
                             </a>
                             
                             <a href="/user/favorites" class="flex items-center gap-4 px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-200 group">
@@ -157,7 +154,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                     </svg>
                                 </div>
-                                <span>My Favorites</span>
+                                <span>{{__('layouts.custom-topbar.user-dropdown.my-fav')}}</span>
                             </a>
                             
                             <a href="#" class="flex items-center gap-4 px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-200 group">
@@ -167,7 +164,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                 </div>
-                                <span>Settings</span>
+                                <span>{{__('layouts.custom-topbar.user-dropdown.settings')}}</span>
                             </a>
                         </div>
                         
@@ -180,7 +177,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                         </svg>
                                     </div>
-                                    <span>Sign Out</span>
+                                    <span>{{__('layouts.custom-topbar.user-dropdown.signout')}}</span>
                                 </button>
                             </form>
                         </div>
@@ -196,7 +193,7 @@
                         href="{{ route('login') }}"
                         class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
                     >
-                        Sign In
+                        {{__('layouts.custom-topbar.signin')}}
                     </x-filament::button>
 
                     <x-filament::button
@@ -206,7 +203,7 @@
                         href="{{ route('register') }}"
                         class="shadow-sm hover:shadow-md transition-shadow duration-200"
                     >
-                        Sign Up
+                        {{__('layouts.custom-topbar.signup')}}
                     </x-filament::button>
                 </div>
             @endauth

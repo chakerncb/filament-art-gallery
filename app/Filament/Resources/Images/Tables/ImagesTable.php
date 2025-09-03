@@ -112,7 +112,7 @@ class ImagesTable
                 }),
                 Action::make('download')
                     ->icon('heroicon-o-arrow-down-tray')
-                    // ->name('Download')
+                    ->name(__('pages.my-iamges.buttons.download'))
                     ->tooltip('Download file')
                     ->action(function ($record) {
                         $filePath = storage_path('app/public/' . $record->file_path);

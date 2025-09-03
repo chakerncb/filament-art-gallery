@@ -17,13 +17,16 @@ class ImageForm
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label(__('pages.my-iamges.image-labels.title'))
                     ->required(),
                     
                 Textarea::make('description')
+                    ->label(__('pages.my-iamges.image-labels.description'))
                     ->columnSpanFull()
                     ->required(),
 
                 FileUpload::make('file_path')
+                    ->label(__('pages.my-iamges.image-labels.file-path'))
                     ->image()
                     ->required()
                     ->maxSize(6144) // 6MB

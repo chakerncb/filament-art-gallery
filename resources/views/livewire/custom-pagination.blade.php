@@ -48,7 +48,7 @@
         </div>
 
         <div class="text-sm text-gray-500 dark:text-gray-400">
-            Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} results
+            {{__('layouts.custom-pagination.showing')}} {{ $paginator->firstItem() }} {{__('layouts.custom-pagination.to')}} {{ $paginator->lastItem() }} {{__('layouts.custom-pagination.of')}} {{ $paginator->total() }} {{__('layouts.custom-pagination.results')}}
         </div>
     </nav>
 @endif

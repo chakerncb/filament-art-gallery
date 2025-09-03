@@ -2,15 +2,11 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Gallery;
 use Filament\Facades\Filament;
-// use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -52,32 +48,19 @@ class UserPanelProvider extends PanelProvider
                         <nav class="hidden md:flex items-center space-x-6">
                             <a href="{{ route(\'home\') }}" 
                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 rounded-md">
-                                Home
+                                  {{__(\'layouts.panel-topbar.links.home\')}}
                             </a>
                             @auth
                                 <a href="{{ url(\'/user/images\') }}" 
                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-all duration-200">
-                                    My Images
+                                    {{__(\'layouts.panel-topbar.links.my-imgs\')}}
                                 </a>
                                 <a href="{{ url(\'/user/favorites\') }}" 
                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-all duration-200">
-                                    Favorites
+                                    {{__(\'layouts.panel-topbar.links.favorites\')}}
                                 </a>
                             @endauth
                         </nav> 
-
-                        @guest
-                            <div class="hidden sm:flex items-center space-x-2">
-                                <a href="{{ route(\'login\') }}" 
-                                   class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-all duration-200">
-                                    Sign In
-                                </a>
-                                <a href="{{ route(\'register\') }}" 
-                                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md shadow-sm transition-all duration-200">
-                                    Sign Up
-                                </a>
-                            </div>
-                        @endguest
                     </div>
                 ')
             )
@@ -121,11 +104,11 @@ class UserPanelProvider extends PanelProvider
 
         $panel->userMenuItems([
             'my-images' => MenuItem::make()
-                ->label('My Images')
+                ->label(__('layouts.panel-topbar.user-dropdown.my-imgs'))
                 ->url('/user/images')
                 ->icon('heroicon-o-photo'),
             'favorites' => MenuItem::make()
-                ->label('Favorites')
+                ->label(__('layouts.panel-topbar.user-dropdown.favorites'))
                 ->url('/user/favorites')
                 ->icon('heroicon-o-heart')
         ] + $panel->getUserMenuItems());

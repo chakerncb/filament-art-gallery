@@ -26,7 +26,6 @@ class Favorites extends Page
     public bool $showModal = false;
     public array $selectedImage = [];
     public bool $isApiImage = false;
-    public array $relatedImages = [];
     public $selectedFavorite = null;
 
     public string $query = '';
@@ -135,8 +134,6 @@ class Favorites extends Page
                 ];
             }
         }
-        
-        $this->relatedImages = [];
     }
 
     public function openImageModal($imageId, $isApi = false)
@@ -158,7 +155,6 @@ class Favorites extends Page
         $this->showModal = false;
         $this->selectedImage = [];
         $this->isApiImage = false;
-        $this->relatedImages = [];
         $this->selectedFavorite = null;
     }
 

@@ -7,7 +7,7 @@
             </h1>
             <div class="w-24 h-1 bg-gradient-to-r from-primary-600 to-indigo-600 mx-auto lg:mx-0 mb-4"></div>
             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-            Discover a curated collection of stunning artworks from talented artists around the world
+              {{__('pages.gallery.description')}}
             </p>
             </div>
             
@@ -17,7 +17,7 @@
                    wire:model="query" 
                    wire:keydown.debounce.300ms="search"
                    wire:keydown.Enter="search"
-                   placeholder="Search artworks..." 
+                   placeholder="{{__('pages.gallery.search')}}" 
                    class="w-full px-4 py-3 pl-12 pr-4 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl shadow-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m3 0H4a1 1 0 00-1 1v14a1 1 0 001 1h16a1 1 0 001-1V5a1 1 0 00-1-1zM9 9h6M9 13h6m-3 4h.01"></path>
                     </svg>
-                    Art Institute of Chicago
+                    {{__('pages.gallery.sections.aic')}}
                 </span>
                 </div>
                 <div class="flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
@@ -106,12 +106,11 @@
                             </div>
                         </div>
                         
-                        @if($this->getFavoriteCount($artwork['id'],$artwork['image_url'] ?? '') > 0)
+                        @if($this->isFavorited($artwork['id'], true))
                         <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1 text-white text-xs flex items-center gap-1">
                             <svg class="w-3 h-3 text-danger-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                             </svg>
-                            {{ $this->getFavoriteCount($artwork['id'],$artwork['image_url'] ?? '') }}
                         </div>
                         @endif
                     </div>
@@ -153,8 +152,8 @@
                         </nav>
                         
                         <div class="text-sm text-gray-500 dark:text-gray-400">
-                            Showing {{ $artworksPagination['current_page'] }} to {{ $artworksPagination['total_pages'] }}
-                            ({{ number_format($artworksPagination['total']) }} total artworks)
+                            {{__('pages.gallery.pagination.showing')}} {{ $artworksPagination['current_page'] }} {{__('pages.gallery.pagination.to')}} {{ $artworksPagination['total_pages'] }}
+                            ({{ number_format($artworksPagination['total']) }} {{__('pages.gallery.pagination.artworks')}})
                         </div>
                     </div>
                 </div>
@@ -171,7 +170,7 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    Community Uploads
+                    {{__('pages.gallery.sections.community')}}
                 </span>
                 </div>
                 <div class="flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
@@ -231,12 +230,11 @@
                             </div>
                         </div>
                         
-                        @if($this->getFavoriteCount($image->id,$image->file_path) > 0)
+                        @if($this->isFavorited($image->id))
                         <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1 text-white text-xs flex items-center gap-1">
                             <svg class="w-3 h-3 text-danger-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                             </svg>
-                            {{ $this->getFavoriteCount($image->id,$image->file_path) }}
                         </div>
                         @endif
                     </div>
@@ -296,7 +294,7 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
-                                Download
+                                {{__('layouts.image-modal.download_btn')}}
                             </button>
                             
                             <button wire:click="toggleCurrentImageFavorite"
@@ -314,7 +312,7 @@
                     <div class="flex-1 overflow-y-auto p-6 space-y-6">
                         @if(!empty($selectedImage['description']))
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Description</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.description')}}</h3>
                             <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
                                 {{ $selectedImage['description'] }}
                             </p>
@@ -322,53 +320,53 @@
                         @endif
 
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Details</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.details.title')}}</h3>
                             <dl class="space-y-3">
                                 @if(!empty($selectedImage['medium']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Medium</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.medium')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['medium'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(!empty($selectedImage['dimensions']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Dimensions</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.dimensions')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['dimensions'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(!empty($selectedImage['department']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Department</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.department')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['department'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(!empty($selectedImage['place_of_origin']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Place of Origin</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.place_of_origin')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['place_of_origin'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(!empty($selectedImage['classification']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Classification</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.classification')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['classification'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(isset($selectedImage['file_size']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">File Size</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.file_size')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['file_size'] }}</dd>
                                 </div>
                                 @endif
 
                                 @if(isset($selectedImage['upload_date']))
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Upload Date</dt>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{__('layouts.image-modal.details.upload_date')}}</dt>
                                     <dd class="text-sm text-gray-900 dark:text-white">{{ $selectedImage['upload_date'] }}</dd>
                                 </div>
                                 @endif
@@ -378,7 +376,7 @@
                         @if($isApiImage)
                             @if(!empty($selectedImage['credit_line']))
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Credit Line</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.credit_line')}}</h3>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                                     {{ $selectedImage['credit_line'] }}
                                 </p>
@@ -387,7 +385,7 @@
 
                             @if(!empty($selectedImage['provenance_text']))
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Provenance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.provenance')}}</h3>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                                     {!! nl2br(e($selectedImage['provenance_text'])) !!}
                                 </p>
@@ -396,7 +394,7 @@
 
                             @if(!empty($selectedImage['exhibition_history']))
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Exhibition History</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.exhibition_history')}}</h3>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                                     {!! nl2br(e($selectedImage['exhibition_history'])) !!}
                                 </p>
@@ -405,7 +403,7 @@
 
                             @if(!empty($selectedImage['publication_history']))
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Publication History</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.publication_history')}}</h3>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                                     {!! nl2br(e($selectedImage['publication_history'])) !!}
                                 </p>
@@ -414,7 +412,7 @@
 
                             @if(!empty($selectedImage['inscriptions']))
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Inscriptions</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{__('layouts.image-modal.inscriptions')}}</h3>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                                     {!! nl2br(e($selectedImage['inscriptions'])) !!}
                                 </p>
@@ -427,7 +425,7 @@
                                     <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span class="text-sm font-medium text-green-800 dark:text-green-200">Currently on view</span>
+                                    <span class="text-sm font-medium text-green-800 dark:text-green-200">{{__('layouts.image-modal.on_view')}}</span>
                                 </div>
                                 @if(!empty($selectedImage['gallery_title']))
                                 <p class="text-sm text-green-700 dark:text-green-300 mt-1">{{ $selectedImage['gallery_title'] }}</p>
@@ -439,7 +437,7 @@
                         @if(!empty($relatedImages))
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                                More by {{ $selectedImage['artist'] }}
+                                {{__('layouts.image-modal.more_by')}} {{ $selectedImage['artist'] }}
                             </h3>
                 
                         <div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
