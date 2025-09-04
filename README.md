@@ -62,9 +62,9 @@ A modern, multilingual art gallery application built with Laravel, Filament, and
    php artisan migrate
    ```
 
-6. **Create admin user** (optional)
+6. **Set up storage link** 
    ```bash
-   php artisan make:filament-user
+   php artisan storage:link
    ```
 
 7. **Build assets**
@@ -103,7 +103,7 @@ This application integrates with the [Art Institute of Chicago API](https://api.
 
 The API responses are cached for optimal performance and to respect rate limits.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 app/
